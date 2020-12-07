@@ -27,7 +27,10 @@ function updateTodoList(tasks){
 
         var label = document.createElement('label');
         label.setAttribute("for", tasks[i].id);
-        label.appendChild(document.createTextNode(tasks[i].task));
+        var span = document.createElement('span');
+        span.innerHTML = tasks[i].task;
+        label.append(span);
+        /* label.appendChild(document.createTextNode(tasks[i].task)); */
         item.appendChild(label);
 
         var divider = document.createElement('hr');
@@ -74,4 +77,3 @@ function removeCompletedTaskFromList(taskId){
 window.onload = function() {
     loadTasks();
 }
-

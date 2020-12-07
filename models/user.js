@@ -18,12 +18,12 @@ User.findOne = function(username){
     })
 }
 
-User.createUser = function(user){  
+User.create = function(username, email, password){  
     return new Promise((resolve, reject) => {
         db.query(
             "INSERT INTO users" +
             " (username, email, password)" +
-            " VALUES ('" + user['username'] + "','" + user['email'] + "','" + user['password'] + "')", 
+            " VALUES ('" + username + "','" + email + "','" + password + "')", 
             (err, rows, fields) => {
                 if(err){
                     reject(err);
