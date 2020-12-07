@@ -27,10 +27,8 @@ function updateTodoList(tasks){
 
         var label = document.createElement('label');
         label.setAttribute("for", tasks[i].id);
-        var span = document.createElement('span');
-        span.innerHTML = tasks[i].task;
-        label.append(span);
-        /* label.appendChild(document.createTextNode(tasks[i].task)); */
+        label.innerHTML = tasks[i].task;
+        
         item.appendChild(label);
 
         var divider = document.createElement('hr');

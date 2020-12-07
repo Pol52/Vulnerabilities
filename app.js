@@ -9,6 +9,7 @@ var cookieParser = require('cookie-parser');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var todoRouter = require('./routes/todo');
+var attackerRouter = require('./routes/attacker');
 
 var app = express();
 
@@ -30,7 +31,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 600000
+    maxAge: 600000,
+    httpOnly: false
   }
 }));
 app.use((req, res, next) => {
@@ -45,7 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/todo', todoRouter);
-
+app.use('/attacker', attackerRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

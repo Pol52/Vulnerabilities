@@ -12,5 +12,9 @@ UserService.createUser = function(req){
          req.body.password);
 }
 
+UserService.changePassword = function(userId, password){
+    return User.update(userId, password);
+}
+
 
 module.exports = UserService;

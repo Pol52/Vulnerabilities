@@ -3,6 +3,8 @@ var router = express.Router();
 var appRoot = require('app-root-path');
 var userService = require('../service/userService');
 var path = require('path');
+var sessionChecker = require('../service/session');
+
 
 router.get('/signup', (req, res) => {
 	res.sendFile(appRoot + '/public/signup.html');
@@ -37,6 +39,16 @@ router.post('/login', (req,res) => {
 		}
 	})		
 });
+
+router.get('/change-pwd', sessionChecker, (req, res) => {
+	const password = req.query.password;
+	const userId = req.session.user.id;
+	userService.changePassword(userId, password)
+	.then((result) => {
+		res.json(result);
+	})
+
+} )
 
 router.get('/logout', (req, res) => {
 	if (req.session.user && req.cookies.user_sid) {

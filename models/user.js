@@ -34,6 +34,23 @@ User.create = function(username, email, password){
     })
 }
 
+User.update = function(userId, password){
+    return new Promise((resolve, reject) => {
+        db.query(
+            "UPDATE users" +
+            " SET password = '" + password + "'" +
+            " WHERE id = " + userId,
+            (err, rows, fields) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(rows);
+                }
+            }
+        )
+    })
+}
+
 
 
 
