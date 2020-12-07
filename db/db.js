@@ -5,7 +5,8 @@ const conn = mysql.createConnection({
     port: 33061,
     user: 'todo-user',
     password: 'todo-user',
-    database: 'todo'
+    database: 'todo',
+    multipleStatements: true
 });
 
 module.exports = conn;

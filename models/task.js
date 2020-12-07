@@ -7,7 +7,7 @@ Task.findAll = function(userId){
         db.query(
             "SELECT * FROM tasks" +
             " WHERE completed = false" +
-            " AND userId=" + conditions['where']['userId'], 
+            " AND userId=" + userId, 
             (err, rows, fields) => {
                 if(err){
                     reject(err);
@@ -22,8 +22,8 @@ Task.create = function(task, userId){
     return new Promise((resolve, reject) => {
         db.query(
             "INSERT INTO tasks" +
-            " (task, completed, userId)" +
-            " VALUES (" + task + "," + userId + ")", 
+            " (userId, completed, task)" +
+            " VALUES (" + userId + ", false,'" + task +"')", 
             (err, rows, fields) => {
                 if(err){
                     reject(err);

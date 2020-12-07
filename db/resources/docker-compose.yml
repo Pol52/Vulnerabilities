@@ -2,7 +2,7 @@ database:
     image: mysql:5.7
     ports:
         - "33061:3306"
-    
+    command: --init-file /data/application/init.sql
     volumes:
         - ./init.sql:/data/application/init.sql
     environment:

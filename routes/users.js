@@ -32,8 +32,7 @@ router.post('/login', (req,res) => {
 		}else if(password != user[0].password){
 			res.redirect('/users/login');
 		}else{
-			console.log(user[0].dataValues);
-			req.session.user = user.dataValues;
+			req.session.user = user[0];
 			res.redirect('/dashboard');
 		}
 	})		

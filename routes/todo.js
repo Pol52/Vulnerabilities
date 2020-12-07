@@ -15,9 +15,8 @@ router.get('/', sessionChecker, function(req, res, next) {
 router.post('/', sessionChecker, (req, res) => {
         const newTask = req.body.task;
         taskService.createTask(newTask, req.session.user)
-        .then((task) => {
-            console.log(task);
-            res.json(task);
+        .then(() => {
+            res.redirect('/todo')
         })
         .catch((err) => {
             console.log(err);
