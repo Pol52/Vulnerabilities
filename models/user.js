@@ -1,33 +1,40 @@
-var Sequelize = require('sequelize');
-var Task = require('./task');
+var db = require('../db/db');
 
-var sequelize = new Sequelize('mysql://todo-user:todo-user@localhost:33061/todo');
 
-var User = sequelize.define('users', {
-    username: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
-    },
-    email: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: false
-    },
-    password: {
-        type: Sequelize.STRING,
-        allowNull: false
-    }
-});
+var User = function(){}
 
-User.prototype.validPassword = function(password){
-        return password === this.password;
+User.findOne = function(username){
+    return new Promise((resolve, reject) => {
+        db.query(
+            "SELECT * FROM users" +
+            " WHERE username='" + username + "'", 
+            (err, rows, fields) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(rows);
+                }
+            })
+    })
 }
 
-User.hasMany(Task, {as: "tasks"});
+User.createUser = function(user){
+    return new Promise((resolve, reject) => {
+        db.query(
+            "INSERT INTO users" +
+            " (username, email, password, createdAt, updatedAt)" +
+            " VALUES (" + user['username'] + "," + user['email'] + "," + user['password'] + ")", 
+            (err, rows, fields) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(rows);
+                }
+            })
+    })
+}
 
-sequelize.sync()
-.then(() => console.log('users table has been successfully created, if one doesn\'t exist'))
-.catch(error => console.log('This error occured', error));
+
+
 
 module.exports = User;

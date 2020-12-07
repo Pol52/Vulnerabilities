@@ -27,11 +27,12 @@ router.post('/login', (req,res) => {
 
 	userService.findOne(username)
 	.then((user) => {
-		if(!user){
+		if(!user){			
 			res.redirect('/users/login');
-		}else if(!user.validPassword(password)){
+		}else if(password != user[0].password){
 			res.redirect('/users/login');
 		}else{
+			console.log(user[0].dataValues);
 			req.session.user = user.dataValues;
 			res.redirect('/dashboard');
 		}

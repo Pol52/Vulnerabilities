@@ -1,30 +1,53 @@
-var Sequelize = require('sequelize');
-var User = require('./user');
-var sequelize = new Sequelize('mysql://todo-user:todo-user@localhost:33061/todo');
+var db = require('../db/db');
 
-var Task = sequelize.define('tasks', {
-    task: {
-        type: Sequelize.STRING,
-        unique: false,
-        allowNull: false
-    },
-    completed: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false
-    },
-    userId: {
-        type: Sequelize.INTEGER,
-        references: {
-            model: User,
-            key: "id"
-        }
-    }
-});
+var Task = function() {}
 
+Task.findAll = function(userId){
+    return new Promise((resolve, reject) => {
+        db.query(
+            "SELECT * FROM tasks" +
+            " WHERE completed = false" +
+            " AND userId=" + conditions['where']['userId'], 
+            (err, rows, fields) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(rows);
+                }
+            })
+    })
+}
 
-sequelize.sync()
-.then(() => console.log('task table has been successfully created, if one doesn\'t exist'))
-.catch(error => console.log('This error occured', error));
+Task.create = function(task, userId){
+    return new Promise((resolve, reject) => {
+        db.query(
+            "INSERT INTO tasks" +
+            " (task, completed, userId)" +
+            " VALUES (" + task + "," + userId + ")", 
+            (err, rows, fields) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(rows);
+                }
+            })
+    })
+}
+
+Task.update = function(taskId){
+    return new Promise((resolve, reject) => {
+        db.query(
+            "UPDATE tasks" +
+            " SET completed = true" +
+            " WHERE id = " + taskId, 
+            (err, rows, fields) => {
+                if(err){
+                    reject(err);
+                }else{
+                    resolve(rows);
+                }
+            })
+    })
+}
 
 module.exports = Task;
