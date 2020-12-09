@@ -4,7 +4,7 @@ var appRoot = require('app-root-path');
 var path = require('path');
 var createError = require('http-errors');
 var sessionChecker = require('../session');
-
+var db = require('../db/db');
 
 router.get('/signup', (_req, res) => {
 	res.sendFile(appRoot + '/public/signup.html');
@@ -13,20 +13,19 @@ router.get('/signup', (_req, res) => {
 router.post('/signup/', (req, res, next) => {
 	db.query("INSERT INTO users" +
 	" (username, email, password)" + 
-	" VALUES ('" + username + "','" + email + "','" + password + "')" , 
-	(err, rows) => {
+	" VALUES ('" + req.body.username + "','" + req.body.email + "','" + req.body.password + "')" , 
+	(err, _rows) => {
 		if(err){
 			next(createError(400));
 		}else{
-			req.session.user = user[0];
-			res.redirect('/dashboard');
+			res.redirect('/users/login');
 		} 
 	})
 });
 
 router.get('/login', (_req, res) => {
 	res.sendFile(path.join(appRoot.path, '/public/login.html'));
-})
+}) 
 
 router.post('/login', (req, res, next) => {
 	db.query(
@@ -38,12 +37,12 @@ router.post('/login', (req, res, next) => {
 			}else{
 				if(rows.length === 0){			
 					res.redirect('/users/login');
-				}else if(req.body.password != user[0].password){
+				}else if(req.body.password != rows[0].password){
 					res.redirect('/users/login');
 				}else{
-					req.session.user = user[0];
+					req.session.user = rows[0];
 					res.redirect('/dashboard');
-				}
+				} 
 			}
 		}
 	)	
