@@ -55,8 +55,8 @@ function completeSelectedTasks(){
         const checkbox = Array.from(task.getElementsByTagName("input"))[0];
         if(checkbox.checked == true){
             $.ajax({
-                url: '/todo/' + checkbox.value,
-                type: 'PATCH',
+                url: '/todo/' + checkbox.value, 
+                type: 'PATCH', 
                 success: (response, status, jqXhr) => {
                     removeCompletedTaskFromList(checkbox.value);
                 },

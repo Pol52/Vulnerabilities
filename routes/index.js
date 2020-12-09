@@ -12,5 +12,5 @@ router.get('/', sessionChecker, function(req, res, next) {
 router.get('/dashboard', sessionChecker, (req, res) => {
       res.sendFile(path.join(appRoot.path, '/public/dashboard.html'));
 });
-
+ 
 module.exports = router;

@@ -15,7 +15,7 @@ Task.findAll = function(userId){
                     resolve(rows);
                 }
             })
-    })
+    }) 
 }
 
 Task.create = function(task, userId){
