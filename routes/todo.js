@@ -1,34 +1,50 @@
 var express = require('express');
 var router = express.Router();
-var taskService = require('../service/taskService');
-var sessionChecker = require('../service/session');
-
+var sessionChecker = require('../session');
+var createError = require('http-errors');
+var db = require('../db/db');
 
 router.get('/', sessionChecker, function(req, res, next) {
-    taskService.findByUserToComplete(req.session.user)
-    .then((tasks) => {
-        res.json(tasks);
-    })
+    db.query(
+        "SELECT * FROM tasks" +
+        " WHERE completed = false" +
+        " AND userId=" + req.session.user.id, 
+        (err, rows, _fields) => {
+            if(err){
+                next(createError(409));
+            }else{
+                res.json(rows);
+            }
+        })
 }); 
 
 
-router.post('/', sessionChecker, (req, res) => {
-        const newTask = req.body.task;
-        taskService.createTask(newTask, req.session.user)
-        .then(() => {
-            res.redirect('/todo')
-        })
-        .catch((err) => {
-            console.log(err);
+router.post('/', sessionChecker, (req, res, next) => {
+    db.query(
+        "INSERT INTO tasks" +
+        " (userId, completed, task)" +
+        " VALUES (" + req.session.user.id + ", false,'" + req.body.task +"')", 
+        (err, _rows, _fields) => {
+            if(err){
+                next(createError(409));
+            }else{
+                res.redirect('/todo');
+            }
         })
 });
 
-router.patch('/:taskId', sessionChecker, (req, res) => {
-    const taskId = req.params.taskId;
-    taskService.completeTask(taskId)
-    .then((result) => {
-        res.json(result);
-    })
+router.patch('/:taskId', sessionChecker, (req, res, next) => {
+    db.query(
+        "UPDATE tasks" +
+        " SET completed = true" +
+        " WHERE id = " + req.params.taskId, 
+        (err, rows, _fields) => {
+            if(err){
+                next(createError(409));
+            }else{
+                res.json(rows);
+            }
+        })
 })
 
 module.exports = router;

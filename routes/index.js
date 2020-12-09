@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var appRoot = require('app-root-path');
-var sessionChecker = require('../service/session');
+var sessionChecker = require('../session');
 
 
 router.get('/', sessionChecker, function(req, res, next) {
