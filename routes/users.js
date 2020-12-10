@@ -6,6 +6,7 @@ var createError = require('http-errors');
 var sessionChecker = require('../session');
 const failedLoginReturnURL = '/users/login';
 const mysql = require('mysql');
+const {body, validationResult} = require('express-validator');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -23,10 +24,12 @@ router.get('/signup', (_req, res) => {
 	res.sendFile(appRoot + '/public/signup.html');
 })
 
-router.post('/signup/', (req, res, next) => {
-	const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+router.post('/signup/', [
+	body('email').isEmail()
+],(req, res, next) => {
 	const dataRegex = /^[a-zA-Z0-9_]*$/;
-	if(!emailRegexp.test(req.body.email) ||
+	const errors = validationResult(req);
+	if(!errors.isEmpty() ||
 	!dataRegex.test(req.body.username) ||
 	!dataRegex.test(req.body.password)){
 		next(createError(406));

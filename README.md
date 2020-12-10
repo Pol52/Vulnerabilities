@@ -10,7 +10,7 @@ NodeJSScan + ESLint
 
 Sonarcloud Security Hotspots
 
-![Sonarcloud High Security Hotspots](https://github.com/Pol52/Vulnerabilities/blob/simple-vulnerabilities/reports/sonarcloud-high-scan.png?raw=true)
+![Sonarcloud High Security Hotspots](https://github.com/Pol52/Vulnerabilities/blob/simple-safe/reports/sonarcloud-high-security-hotspots.png?raw=true)
 
 InsiderSec PDF Report
 
