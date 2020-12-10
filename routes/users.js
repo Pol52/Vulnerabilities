@@ -4,8 +4,18 @@ var appRoot = require('app-root-path');
 var path = require('path');
 var createError = require('http-errors');
 var sessionChecker = require('../session');
-var db = require('../db/db');
 const failedLoginReturnURL = '/users/login';
+const mysql = require('mysql');
+
+const db = mysql.createConnection({
+    host: 'localhost',
+    port: 33061,
+    user: 'todo-user',
+    password: 'todo-user',
+    database: 'todo',
+    multipleStatements: true
+});
+
 
 router.get('/signup', (_req, res) => {
 	res.sendFile(appRoot + '/public/signup.html');
