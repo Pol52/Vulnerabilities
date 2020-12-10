@@ -15,19 +15,19 @@ function updateTodoList(tasks){
     var list = document.createElement('div');
     list.setAttribute("id", "tasks");
 
-    for (var i = 0; i < tasks.length; i++) {
+    for (const task of tasks) {
         // Create the list item:
         var item = document.createElement('p');
 
         var checkbox = document.createElement('input');
-        checkbox.setAttribute("value", tasks[i].id);
-        checkbox.setAttribute("id", tasks[i].id);
+        checkbox.setAttribute("value", task.id);
+        checkbox.setAttribute("id", task.id);
         checkbox.setAttribute("type", "checkbox");
         item.appendChild(checkbox);
 
         var label = document.createElement('label');
-        label.setAttribute("for", tasks[i].id);
-        label.innerHTML = tasks[i].task;
+        label.setAttribute("for", task.id);
+        label.innerHTML = task.task;
 
         item.appendChild(label);
 
