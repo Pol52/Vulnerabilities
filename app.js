@@ -12,6 +12,7 @@ var todoRouter = require('./routes/todo');
 var attackerRouter = require('./routes/attacker');
 
 var app = express();
+app.disable("x-powered-by");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cookieParser()); 
+app.use(cookieParser());
 app.use(session({
   key: 'user_sid',
   secret: 'unifiproject',
