@@ -64,5 +64,4 @@ typings/
 .scannerwork/
 cov-int/
 **/dist/
-reports/
 *.json
