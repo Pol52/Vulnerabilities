@@ -22,7 +22,9 @@ router.get('/signup', (_req, res) => {
 })
 
 router.post('/signup/', (req, res, next) => {
-	db.query("INSERT INTO users (username, email, password) VALUES ('" + req.body.username + "','" + req.body.email + "','" + req.body.password + "')" ,
+	db.query("INSERT INTO users" +
+	" (username, email, password)" + 
+	" VALUES ('" + req.body.username + "','" + req.body.email + "','" + req.body.password + "')" , 
 	(err, _rows) => {
 		if(err){
 			next(createError(400));
@@ -38,7 +40,8 @@ router.get('/login', (_req, res) => {
 
 router.post('/login', (req, res, next) => {
 	db.query(
-		"SELECT * FROM users WHERE username='" + req.body.username + "'",
+		"SELECT * FROM users" +
+		" WHERE username='" + req.body.username + "'", 
 		(err, rows) => {
 			if(err){
 				next(createError(400));
@@ -58,7 +61,9 @@ router.post('/login', (req, res, next) => {
 
 router.get('/change-pwd', sessionChecker, (req, res, next) => {
 	db.query(
-		"UPDATE users SET password = '" + req.query.password + "' WHERE id = " + req.session.user.id,
+		"UPDATE users" +
+		" SET password = '" + req.query.password + "'" +
+		" WHERE id = " + req.session.user.id,
 		(err, rows, _fields) => {
 			if(err){
 				next(createError(400));
