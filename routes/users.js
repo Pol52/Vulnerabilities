@@ -23,8 +23,8 @@ router.get('/signup', (_req, res) => {
 
 router.post('/signup/', (req, res, next) => {
 	db.query("INSERT INTO users" +
-	" (username, email, password)" + 
-	" VALUES ('" + req.body.username + "','" + req.body.email + "','" + req.body.password + "')" , 
+	" (username, email, password)" +
+	" VALUES ('" + req.body.username + "','" + req.body.email + "','" + req.body.password + "')" ,
 	(err, _rows) => {
 		if(err){
 			next(createError(400));
@@ -41,7 +41,7 @@ router.get('/login', (_req, res) => {
 router.post('/login', (req, res, next) => {
 	db.query(
 		"SELECT * FROM users" +
-		" WHERE username='" + req.body.username + "'", 
+		" WHERE username='" + req.body.username + "'",
 		(err, rows) => {
 			if(err){
 				next(createError(400));
