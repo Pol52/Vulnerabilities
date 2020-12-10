@@ -4,9 +4,9 @@ HCI AppScan VScode plugin security issues detected
 
 NodeJSScan + ESLint
 
-![NodeJSScan](https://github.com/Pol52/Vulnerabilities/blob/simple-vulnerabilities/reports/nodejsscan.jpg?raw=true)
+![NodeJSScan](https://github.com/Pol52/Vulnerabilities/blob/simple-safe/reports/nodejsscan.png?raw=true)
 
-![ESLint](https://github.com/Pol52/Vulnerabilities/blob/simple-vulnerabilities/reports/eslint.png?raw=true)
+    ESLint empty
 
 Sonarcloud Security Hotspots
 

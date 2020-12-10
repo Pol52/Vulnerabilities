@@ -36,7 +36,9 @@ app.use(session({
   cookie: {
     maxAge: 600000,
     httpOnly: true,
-    domain:'localhost'
+    domain:'localhost',
+    path:'/',
+    sameSite: true
   }
 }));
 app.use((req, res, next) => {

@@ -6,7 +6,7 @@ var createError = require('http-errors');
 var sessionChecker = require('../session');
 const failedLoginReturnURL = '/users/login';
 const mysql = require('mysql');
-const {body, validationResult} = require('express-validator');
+const {body, query ,validationResult} = require('express-validator');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -25,13 +25,12 @@ router.get('/signup', (_req, res) => {
 })
 
 router.post('/signup/', [
-	body('email').isEmail()
+	body('email').isEmail(),
+	body('username').matches(/^[a-zA-Z0-9_]*$/).isLength({min: 1, max: 20}),
+	body('password').matches(/^[a-zA-Z0-9_]*$/).isLength({min: 1, max: 20})
 ],(req, res, next) => {
-	const dataRegex = /^[a-zA-Z0-9_]*$/;
 	const errors = validationResult(req);
-	if(!errors.isEmpty() ||
-	!dataRegex.test(req.body.username) ||
-	!dataRegex.test(req.body.password)){
+	if(!errors.isEmpty()){
 		next(createError(406));
 	}
 	db.query("INSERT INTO users" +
@@ -50,42 +49,57 @@ router.get('/login', (_req, res) => {
 	res.sendFile(path.join(appRoot.path, '/public/login.html'));
 });
 
-router.post('/login', (req, res, next) => {
-	const username = req.body.username.replace(/\W/g, '');
-	db.query(
-		"SELECT * FROM users" +
-		" WHERE username='" + username + "'",
-		(err, rows) => {
-			if(err){
-				next(createError(400));
-			}else{
-				if(rows.length === 0){
-					res.redirect(failedLoginReturnURL);
-				}else if(req.body.password !== rows[0].password){
-					res.redirect(failedLoginReturnURL);
+router.post('/login', [
+	body('username').matches(/^[a-zA-Z0-9_]*$/).isLength({min: 1, max: 20})
+],
+(req, res, next) => {
+	const errors = validationResult(req);
+	console.log(errors);
+	if(!errors.isEmpty()){
+		next(createError(400));
+	}else{
+		db.query(
+			"SELECT * FROM users" +
+			" WHERE username='" + req.body.username + "'",
+			(err, rows) => {
+				if(err){
+					next(createError(400));
 				}else{
-					req.session.user = rows[0];
-					res.redirect('/dashboard');
+					if(rows.length === 0){
+						res.redirect(failedLoginReturnURL);
+					}else if(req.body.password !== rows[0].password){
+						res.redirect(failedLoginReturnURL);
+					}else{
+						req.session.user = rows[0];
+						res.redirect('/dashboard');
+					}
 				}
 			}
-		}
-	)
+		)
+	}
 });
 
-router.get('/change-pwd', sessionChecker, (req, res, next) => {
-	const password = req.query.password.replace(/\W/g, '');
-	db.query(
-		"UPDATE users" +
-		" SET password = '" + password+ "'" +
-		" WHERE id = " + req.session.user.id,
-		(err, rows, _fields) => {
-			if(err){
-				next(createError(400));
-			}else{
-				res.json(rows);
+router.get('/change-pwd', [
+	sessionChecker,
+	query('password').matches(/^[a-zA-Z0-9_]*$/).isLength({min: 1, max: 20})
+], (req, res, next) => {
+	const errors = validationResult(req);
+	if(!errors.isEmpty()){
+		next(createError(400));
+	}else{
+		db.query(
+			"UPDATE users" +
+			" SET password = '" + password+ "'" +
+			" WHERE id = " + req.session.user.id,
+			(err, rows, _fields) => {
+				if(err){
+					next(createError(400));
+				}else{
+					res.json(rows);
+				}
 			}
-		}
-	);
+		);
+	}
 });
 
 router.get('/logout', (req, res) => {
