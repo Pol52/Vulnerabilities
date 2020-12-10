@@ -14,8 +14,8 @@ Sonarcloud Security Hotspots
 
 InsiderSec PDF Report
 
-![InsiderSec pdf report](https://github.com/Pol52/Vulnerabilities/blob/simple-vulnerabilities/reports/insidersec.pdf)
+![InsiderSec pdf report](https://github.com/Pol52/Vulnerabilities/blob/simple-safe/reports/insidersec.pdf)
 
 HCI AppScan on Cloud Report
 
-![HCIAppScan on Cloud report](https://github.com/Pol52/Vulnerabilities/blob/simple-vulnerabilities/reports/insidersec.pdf)
+![HCIAppScan on Cloud report](https://github.com/Pol52/Vulnerabilities/blob/simple-safe/reports/hclscancloud.pdf)
