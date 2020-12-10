@@ -56,14 +56,14 @@ function completeSelectedTasks(){
         if(checkbox.checked == true){
             $.ajax({
                 url: '/todo/' + checkbox.value, 
-                type: 'PATCH', 
+                type: 'PATCH',
                 success: (response, status, jqXhr) => {
                     removeCompletedTaskFromList(checkbox.value);
                 },
                 error: (response, status, jqXhr) => {
                     alert("Error while completing a task");
                 }
-            }) 
+            })
         }
     })
 }

@@ -3,14 +3,12 @@ var router = express.Router();
 var taskService = require('../service/taskService');
 var sessionChecker = require('../service/session');
 
-
 router.get('/', sessionChecker, function(req, res, next) {
     taskService.findByUserToComplete(req.session.user)
     .then((tasks) => {
         res.json(tasks);
     })
-}); 
-
+});
 
 router.post('/', sessionChecker, (req, res) => {
         const newTask = req.body.task;

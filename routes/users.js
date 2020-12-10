@@ -5,10 +5,10 @@ var userService = require('../service/userService');
 var path = require('path');
 var sessionChecker = require('../service/session');
 
-
 router.get('/signup', (req, res) => {
 	res.sendFile(appRoot + '/public/signup.html');
-})
+});
+
 router.post('/signup/', (req, res) => {
 	userService.createUser(req)
 	.then(user => {
@@ -22,14 +22,15 @@ router.post('/signup/', (req, res) => {
 
 router.get('/login', (req, res) => {
 	res.sendFile(path.join(appRoot.path, '/public/login.html'));
-})
+});
+
 router.post('/login', (req,res) => {
 	var username = req.body.username,
 	password = req.body.password;
 
 	userService.findOne(username)
 	.then((user) => {
-		if(!user){			
+		if(!user){
 			res.redirect('/users/login');
 		}else if(password != user[0].password){
 			res.redirect('/users/login');
@@ -37,7 +38,7 @@ router.post('/login', (req,res) => {
 			req.session.user = user[0];
 			res.redirect('/dashboard');
 		}
-	})		
+	});
 });
 
 router.get('/change-pwd', sessionChecker, (req, res) => {
@@ -47,8 +48,7 @@ router.get('/change-pwd', sessionChecker, (req, res) => {
 	.then((result) => {
 		res.json(result);
 	})
-
-} )
+});
 
 router.get('/logout', (req, res) => {
 	if (req.session.user && req.cookies.user_sid) {
