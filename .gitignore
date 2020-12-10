@@ -65,3 +65,4 @@ typings/
 cov-int/
 **/dist/
 *.json
+.DS_Store
