@@ -10,6 +10,8 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var todoRouter = require('./routes/todo');
 var attackerRouter = require('./routes/attacker');
+const dotenv = require('dotenv');
+dotenv.config();
 
 var app = express();
 
@@ -27,12 +29,13 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
   key: 'user_sid',
-  secret: 'unifiproject',
+  secret: `${process.env.COOKIE_SECRET}`,
   resave: false,
   saveUninitialized: false,
   cookie: {
     maxAge: 600000,
-    httpOnly: false
+    httpOnly: true,
+    domain:'localhost'
   }
 }));
 app.use((req, res, next) => {

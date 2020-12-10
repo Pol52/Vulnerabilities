@@ -7,8 +7,8 @@ const mysql = require('mysql');
 const db = mysql.createConnection({
     host: 'localhost',
     port: 33061,
-    user: 'todo-user',
-    password: 'todo-user',
+    user: `${process.env.DB_USER}`,
+    password: `${process.env.DB_PASSWORD}`,
     database: 'todo',
     multipleStatements: true
 });
@@ -21,8 +21,9 @@ router.get('/', sessionChecker, function(req, res, next) {
 
 
 router.post('/', sessionChecker, (req, res, next) => {
+    const task = req.body.task.replace(/\W/g, '');
     db.query(
-        'INSERT INTO tasks (userId, completed, task) VALUES ( ' + req.session.user.id + ', false, "' + req.body.task + '")',
+        'INSERT INTO tasks (userId, completed, task) VALUES ( ' + req.session.user.id + ', false, "' + task + '")',
         (err, _rows) => {
             if(err){
                 next(createError(409));
@@ -33,9 +34,14 @@ router.post('/', sessionChecker, (req, res, next) => {
 });
 
 router.patch('/:taskId', sessionChecker, (req, res, next) => {
-    db.query( "UPDATE tasks SET completed = true WHERE id = " + req.params.taskId,
-    (err, rows) => handleDBResult(res, next, rows, err))
-})
+    const idRegex = /^\d+$/;
+    if(idRegex.test(req.body.params.taskId)){
+        db.query( "UPDATE tasks SET completed = true WHERE id = " + req.params.taskId,
+        (err, rows) => handleDBResult(res, next, rows, err))
+    }else{
+        next(createError(409));
+    }
+});
 
 function handleDBResult(res, next, rows, err){
     if(err){

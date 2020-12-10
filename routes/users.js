@@ -6,14 +6,16 @@ var createError = require('http-errors');
 var sessionChecker = require('../session');
 const failedLoginReturnURL = '/users/login';
 const mysql = require('mysql');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    port: 33061,
-    user: 'todo-user',
-    password: 'todo-user',
-    database: 'todo',
-    multipleStatements: true
+	host: 'localhost',
+	port: 33061,
+	user: `${process.env.DB_USER}`,
+	password: `${process.env.DB_PASSWORD}`,
+	database: 'todo',
+	multipleStatements: true
 });
 
 
@@ -22,6 +24,13 @@ router.get('/signup', (_req, res) => {
 })
 
 router.post('/signup/', (req, res, next) => {
+	const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+	const dataRegex = /^[a-zA-Z0-9_]*$/;
+	if(!emailRegexp.test(req.body.email) ||
+	!dataRegex.test(req.body.username) ||
+	!dataRegex.test(req.body.password)){
+		next(createError(406));
+	}
 	db.query("INSERT INTO users" +
 	" (username, email, password)" +
 	" VALUES ('" + req.body.username + "','" + req.body.email + "','" + req.body.password + "')" ,
@@ -39,9 +48,10 @@ router.get('/login', (_req, res) => {
 });
 
 router.post('/login', (req, res, next) => {
+	const username = req.body.username.replace(/\W/g, '');
 	db.query(
 		"SELECT * FROM users" +
-		" WHERE username='" + req.body.username + "'",
+		" WHERE username='" + username + "'",
 		(err, rows) => {
 			if(err){
 				next(createError(400));
@@ -60,9 +70,10 @@ router.post('/login', (req, res, next) => {
 });
 
 router.get('/change-pwd', sessionChecker, (req, res, next) => {
+	const password = req.query.password.replace(/\W/g, '');
 	db.query(
 		"UPDATE users" +
-		" SET password = '" + req.query.password + "'" +
+		" SET password = '" + password+ "'" +
 		" WHERE id = " + req.session.user.id,
 		(err, rows, _fields) => {
 			if(err){

@@ -27,7 +27,7 @@ function updateTodoList(tasks){
 
         var label = document.createElement('label');
         label.setAttribute("for", task.id);
-        label.innerHTML = task.task;
+        label.innerText = task.task;
 
         item.appendChild(label);
 
@@ -45,7 +45,7 @@ function updateTodoList(tasks){
 }
 
 function loadTasks(){
-    $.get("/todo", function(data, status){
+    $.get("/todo", function(data, _status){
         updateTodoList(data);
     })
 }
