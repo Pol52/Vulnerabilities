@@ -341,14 +341,14 @@
       By default, Xanitizer uses NodeJS to compile Angular and TypeScript projects. This could be a potential risk if someone has manipulated the 'ng' or the 'tsc' script or is simply not necessary if you have already compiled the project on your own. In this case you can disable this behaviour.
     -->
         
-    <JavaScript_ALLOW_XANITIZER_COMPILATION value=""/>
+    <JavaScript_ALLOW_XANITIZER_COMPILATION value="YES"/>
       
     
     <!--      
       The npm audit APIs can be used to report on known vulnerable node.js libraries. This requires an Internet connection and so has to be allowed explicitly.
     -->
         
-    <JavaScript_NODE_AUDIT value="false"/>
+    <JavaScript_NODE_AUDIT value="true"/>
       
     
     <!--      
@@ -421,7 +421,7 @@
       JavaScript analysis has to compile TypeScript and Angular projects; for this, a NodeJS executable is needed. This is normally searched along the PATH environment variable. If this field is not empty, it must contain the absolute path to the node executable to be used, which means that this only works on machines where the node executable is located at this spot.
     -->
         
-    <JavaScript_NODE_EXE_PATH value=""/>
+    <JavaScript_NODE_EXE_PATH value="usr/local/bin/node"/>
       
   </ConfigItems>
     
@@ -529,6 +529,7 @@
   <PD_ProblemType name="protocolCheckProblemType:AES_BothEncryptionAndDecryption"/>
   <PD_ProblemType name="protocolCheckProblemType:AES_Decryption"/>
   <PD_ProblemType name="protocolCheckProblemType:AES_Encryption"/>
+  <PD_ProblemType name="protocolCheckProblemType:CatchBlockLogging"/>
   <PD_ProblemType name="protocolCheckProblemType:CryptographicHashing"/>
   <PD_ProblemType name="protocolCheckProblemType:InitializationVectorConstruction"/>
   <PD_ProblemType name="protocolCheckProblemType:OnlyAllowedCryptoAlgorithms"/>
@@ -545,6 +546,8 @@
   <PD_ProblemType name="protocolCheckProblemType:XMLExternalDTDs"/>
   <PD_ProblemType name="pt:PathTraversal"/>
   <PD_ProblemType name="rhi:ResponseHeaderInjection"/>
+  <PD_ProblemType name="rl:DBAccessResourceLeak"/>
+  <PD_ProblemType name="rl:DBSQLResultSetResourceLeak"/>
   <PD_ProblemType name="rl:IOStreamResourceLeak"/>
   <PD_ProblemType name="rl:SocketResourceLeak"/>
   <PD_ProblemType name="ssl:SpecialMethodCall:SSL/TLSValidation"/>
