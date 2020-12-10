@@ -11,7 +11,7 @@ var usersRouter = require('./routes/users');
 var todoRouter = require('./routes/todo');
 var attackerRouter = require('./routes/attacker');
 
-var app = express(); 
+var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cookieParser()); 
+app.use(cookieParser());
 app.use(session({
   key: 'user_sid',
   secret: 'unifiproject',
@@ -37,7 +37,7 @@ app.use(session({
 }));
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
-      res.clearCookie('user_sid');        
+      res.clearCookie('user_sid');
   }
   next();
 });

@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var appRoot = require('app-root-path');
 
-router.get('/', (req, res) => { 
+router.get('/', (req, _res) => {
     console.log(req.query.c)
 })
 

@@ -5,12 +5,12 @@ var appRoot = require('app-root-path');
 var sessionChecker = require('../session');
 
 
-router.get('/', sessionChecker, function(req, res, next) {
+router.get('/', sessionChecker, function(_req, res, next) {
   res.redirect('/dashboard');
-});  
+});
 
-router.get('/dashboard', sessionChecker, (req, res) => {
+router.get('/dashboard', sessionChecker, (_req, res) => {
       res.sendFile(path.join(appRoot.path, '/public/dashboard.html'));
 });
- 
+
 module.exports = router;
