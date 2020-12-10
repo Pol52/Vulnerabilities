@@ -46,7 +46,7 @@ function updateTodoList(tasks){
 function loadTasks(){
     $.get("/todo", function(data, status){
         updateTodoList(data);
-    })
+    }) 
 }
 
 function completeSelectedTasks(){

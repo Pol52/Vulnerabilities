@@ -7,7 +7,7 @@ var sessionChecker = require('../session');
 
 router.get('/', sessionChecker, function(req, res, next) {
   res.redirect('/dashboard');
-}); 
+});  
 
 router.get('/dashboard', sessionChecker, (req, res) => {
       res.sendFile(path.join(appRoot.path, '/public/dashboard.html'));

@@ -8,5 +8,5 @@ const conn = mysql.createConnection({
     database: 'todo',
     multipleStatements: true
 }); 
-
-module.exports = conn; 
+ 
+module.exports = conn;  

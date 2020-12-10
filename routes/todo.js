@@ -3,7 +3,7 @@ var router = express.Router();
 var sessionChecker = require('../session');
 var createError = require('http-errors');
 var db = require('../db/db');
-
+ 
 router.get('/', sessionChecker, function(req, res, next) {
     db.query(
         "SELECT * FROM tasks" +
@@ -13,9 +13,10 @@ router.get('/', sessionChecker, function(req, res, next) {
             if(err){
                 next(createError(409));
             }else{
-                res.json(rows);
+                res.json(rows); 
             }
-        })
+        } 
+    )
 }); 
 
 
