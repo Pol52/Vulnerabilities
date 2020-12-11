@@ -17,6 +17,7 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "mysql2": "^2.2.5",
+    "safe-compare": "^1.1.4",
     "sequelize": "^6.3.5"
   },
   "devDependencies": {}

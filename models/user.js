@@ -1,5 +1,6 @@
 var Sequelize = require('sequelize');
 var Task = require('./task');
+var safeCompare = require('safe-compare');
 
 var sequelize = new Sequelize(process.env.DB_URL);
 
@@ -34,7 +35,7 @@ var User = sequelize.define('users', {
 });
 
 User.prototype.validPassword = function(password){
-        return password === this.password;
+        return safeCompare(password, this.password);
 }
 
 User.hasMany(Task, {as: "tasks"});
