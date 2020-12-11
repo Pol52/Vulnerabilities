@@ -1,6 +1,8 @@
 var User = require('../models/user');
 
-var UserService = function(){}
+var UserService = function(){
+    //empty user service
+};
 
 UserService.findOne = function(username){
     return User.findOne({ where: { username: username } })
@@ -13,6 +15,5 @@ UserService.createUser = function(req){
         password: req.body.password
     })
 }
-
 
 module.exports = UserService;

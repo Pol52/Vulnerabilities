@@ -1,22 +1,35 @@
 var Sequelize = require('sequelize');
 var Task = require('./task');
 
-var sequelize = new Sequelize('mysql://todo-user:todo-user@localhost:33061/todo');
+var sequelize = new Sequelize(process.env.DB_URL);
 
 var User = sequelize.define('users', {
     username: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notNull: true,
+            notEmpty: true,
+            len: [1, 20]
+        }
     },
     email: {
         type: Sequelize.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            isEmail: true
+        }
     },
     password: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notNull: true,
+            notEmpty: true,
+            len: [1, 20]
+        }
     }
 });
 
@@ -27,7 +40,6 @@ User.prototype.validPassword = function(password){
 User.hasMany(Task, {as: "tasks"});
 
 sequelize.sync()
-.then(() => console.log('users table has been successfully created, if one doesn\'t exist'))
-.catch(error => console.log('This error occured', error));
+.catch(error => console.log('This error occurred', error));
 
 module.exports = User;

@@ -63,3 +63,4 @@ typings/
 # remove vscode cache
 .vscode
 .DS_Store
+**/dist/

@@ -5,13 +5,14 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var todoRouter = require('./routes/todo');
 
 var app = express();
-
+app.disable("x-powered-by");
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -26,16 +27,19 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
   key: 'user_sid',
-  secret: 'unifiproject',
+  secret: process.env.COOKIE_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 600000
+    maxAge: 600000,
+    httpOnly: true,
+    domain: 'localhost',
+    path: '/'
   }
 }));
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
-      res.clearCookie('user_sid');        
+      res.clearCookie('user_sid');
   }
   next();
 });

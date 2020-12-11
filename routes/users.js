@@ -3,24 +3,27 @@ var router = express.Router();
 var appRoot = require('app-root-path');
 var userService = require('../service/userService');
 var path = require('path');
+const failedLoginFallbackURL = '/users/login';
 
-router.get('/signup', (req, res) => {
+router.get('/signup', (_req, res) => {
 	res.sendFile(appRoot + '/public/signup.html');
-})
+});
+
 router.post('/signup/', (req, res) => {
 	userService.createUser(req)
 	.then(user => {
 		req.session.user = user.dataValues;
 		res.redirect('/dashboard');
 	})
-	.catch(error => {
+	.catch(() => {
 		res.redirect('/users/signup');
 	});
 });
 
-router.get('/login', (req, res) => {
+router.get('/login', (_req, res) => {
 	res.sendFile(path.join(appRoot.path, '/public/login.html'));
-})
+});
+
 router.post('/login', (req,res) => {
 	var username = req.body.username,
 	password = req.body.password;
@@ -28,14 +31,17 @@ router.post('/login', (req,res) => {
 	userService.findOne(username)
 	.then((user) => {
 		if(!user){
-			res.redirect('/users/login');
+			res.redirect(failedLoginFallbackURL);
 		}else if(!user.validPassword(password)){
-			res.redirect('/users/login');
+			res.redirect(failedLoginFallbackURL);
 		}else{
 			req.session.user = user.dataValues;
 			res.redirect('/dashboard');
 		}
-	})		
+	})
+	.catch(() => {
+		res.redirect(failedLoginFallbackURL);
+	})
 });
 
 router.get('/logout', (req, res) => {
@@ -43,7 +49,7 @@ router.get('/logout', (req, res) => {
 		res.clearCookie('user_sid');
 		res.redirect('/');
 	} else {
-		res.redirect('/login');
+		res.redirect(failedLoginFallbackURL);
 	}
 });
 

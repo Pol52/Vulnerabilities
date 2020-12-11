@@ -1,12 +1,17 @@
 var Sequelize = require('sequelize');
 var User = require('./user');
-var sequelize = new Sequelize('mysql://todo-user:todo-user@localhost:33061/todo');
+var sequelize = new Sequelize(process.env.DB_URL);
 
 var Task = sequelize.define('tasks', {
     task: {
         type: Sequelize.STRING,
         unique: false,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            notNull: true,
+            is: /^[a-zA-Z0-9_]*$/,
+            len: [1, 1000]
+        }
     },
     completed: {
         type: Sequelize.BOOLEAN,
@@ -22,9 +27,7 @@ var Task = sequelize.define('tasks', {
     }
 });
 
-
 sequelize.sync()
-.then(() => console.log('task table has been successfully created, if one doesn\'t exist'))
-.catch(error => console.log('This error occured', error));
+.catch(error => console.log('This error occurred', error));
 
 module.exports = Task;

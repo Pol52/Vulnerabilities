@@ -1,11 +1,12 @@
 var Task = require('../models/task');
 
-var TaskService = function(){}
-
+var TaskService = function(){
+    //empty task service
+}
 
 TaskService.findByUser = function(user){
-    return Task.findAll({ 
-        where: { 
+    return Task.findAll({
+        where: {
             userId: user.id
          }
      })
