@@ -1,6 +1,6 @@
 HCI AppScan VScode plugin security issues detected
 
-![HCI AppScan](https://github.com/Pol52/Vulnerabilities/blob/simple-safe/reports/hciappscan.png?raw=true)
+![HCI AppScan](https://github.com/Pol52/Vulnerabilities/blob/simple-safe/reports/HCIAppScan.png?raw=true)
 
 NodeJSScan + ESLint
 
