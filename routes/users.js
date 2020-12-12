@@ -44,6 +44,15 @@ router.post('/login', (req,res) => {
 	})
 });
 
+router.post('/change-pwd', sessionChecker, (req, res) => {
+	const password = req.body.password;
+	const userId = req.session.user.id;
+	userService.changePassword(userId, password)
+	.then((result) => {
+		res.json(result);
+	})
+});
+
 router.get('/logout', (req, res) => {
 	if (req.session.user && req.cookies.user_sid) {
 		res.clearCookie('user_sid');
