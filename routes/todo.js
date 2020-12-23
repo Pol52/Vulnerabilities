@@ -27,7 +27,7 @@ router.post('/', sessionChecker, (req, res, next) => {
             if(err){
                 next(createError(409));
             }else{
-                res.redirect('/todo');
+                res.redirect('/todo?id=' + req.session.user.id);
             }
         });
 });
