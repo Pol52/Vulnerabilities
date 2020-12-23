@@ -18,4 +18,4 @@ InsiderSec PDF Report
 
 HCI AppScan on Cloud Report
 
-![HCIAppScan on Cloud report](https://github.com/Pol52/Vulnerabilities/blob/simple-vulnerabilities/reports/insidersec.pdf)
+![HCIAppScan on Cloud report](https://github.com/Pol52/Vulnerabilities/blob/simple-vulnerabilities/reports/hciAppScanreport.pdf)
