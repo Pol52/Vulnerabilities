@@ -47,12 +47,12 @@ router.post('/login', (req, res, next) => {
 				next(createError(400));
 			}else{
 				if(rows.length === 0){
-					res.redirect(failedLoginReturnURL);
+					res.status(403).json({ error: "wrong credentials"});
 				}else if(req.body.password !== rows[0].password){
-					res.redirect(failedLoginReturnURL);
+					res.status(403).json({ error: "wrong credentials"});
 				}else{
 					req.session.user = rows[0];
-					res.redirect('/dashboard');
+					res.json(rows[0]);
 				}
 			}
 		}

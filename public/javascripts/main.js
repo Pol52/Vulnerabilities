@@ -45,7 +45,8 @@ function updateTodoList(tasks){
 }
 
 function loadTasks(){
-    $.get("/todo", function(data, status){
+    $.get("/todo?id=" + window.localStorage.getItem("userId"),
+     function(data, status){
         updateTodoList(data);
     })
 }

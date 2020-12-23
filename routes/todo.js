@@ -15,7 +15,7 @@ const db = mysql.createConnection({
 
 router.get('/', sessionChecker, function(req, res, next) {
     db.query(
-        'SELECT * FROM tasks WHERE userId=' + req.session.user.id,
+        'SELECT * FROM tasks WHERE userId=' + req.query.id,
         (err, rows) => handleDBResult(res, next, rows, err));
 });
 
