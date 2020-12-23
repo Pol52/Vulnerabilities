@@ -54,7 +54,6 @@ router.post('/login', [
 ],
 (req, res, next) => {
 	const errors = validationResult(req);
-	console.log(errors);
 	if(!errors.isEmpty()){
 		next(createError(400));
 	}else{
@@ -63,15 +62,16 @@ router.post('/login', [
 			" WHERE username='" + req.body.username + "'",
 			(err, rows) => {
 				if(err){
+					console.log(err);
 					next(createError(400));
 				}else{
 					if(rows.length === 0){
-						res.redirect(failedLoginReturnURL);
+						res.status(403).json({ error: "wrong credentials"});
 					}else if(req.body.password !== rows[0].password){
-						res.redirect(failedLoginReturnURL);
+						res.status(403).json({ error: "wrong credentials"});
 					}else{
 						req.session.user = rows[0];
-						res.redirect('/dashboard');
+						res.json(rows[0]);
 					}
 				}
 			}
@@ -79,9 +79,9 @@ router.post('/login', [
 	}
 });
 
-router.get('/change-pwd', [
+router.post('/change-pwd', [
 	sessionChecker,
-	query('password').matches(/^[a-zA-Z0-9_]*$/).isLength({min: 1, max: 20})
+	body('password').matches(/^[a-zA-Z0-9_]*$/).isLength({min: 1, max: 20})
 ], (req, res, next) => {
 	const errors = validationResult(req);
 	if(!errors.isEmpty()){
@@ -89,7 +89,7 @@ router.get('/change-pwd', [
 	}else{
 		db.query(
 			"UPDATE users" +
-			" SET password = '" + password+ "'" +
+			" SET password = '" + req.body.password+ "'" +
 			" WHERE id = " + req.session.user.id,
 			(err, rows, _fields) => {
 				if(err){

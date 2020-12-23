@@ -35,7 +35,7 @@ router.post('/', sessionChecker, (req, res, next) => {
 
 router.patch('/:taskId', sessionChecker, (req, res, next) => {
     const idRegex = /^\d+$/;
-    if(idRegex.test(req.body.params.taskId)){
+    if(idRegex.test(req.params.taskId)){
         db.query( "UPDATE tasks SET completed = true WHERE id = " + req.params.taskId,
         (err, rows) => handleDBResult(res, next, rows, err))
     }else{
