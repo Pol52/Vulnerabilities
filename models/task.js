@@ -1,7 +1,7 @@
 var db = require('../db/db');
 
 var Task = function() {
-    //empty task service
+    //empty task repository
 }
 
 Task.findAll = function(userId){
@@ -9,7 +9,7 @@ Task.findAll = function(userId){
         db.query(
             "SELECT * FROM tasks" +
             " WHERE completed = false" +
-            " AND userId=" + userId, 
+            " AND userId=" + userId,
             (err, rows, fields) => {
                 if(err){
                     reject(err);
@@ -25,7 +25,7 @@ Task.create = function(task, userId){
         db.query(
             "INSERT INTO tasks" +
             " (userId, completed, task)" +
-            " VALUES (" + userId + ", false,'" + task +"')", 
+            " VALUES (" + userId + ", false,'" + task +"')",
             (err, rows, fields) => {
                 if(err){
                     reject(err);
@@ -41,7 +41,7 @@ Task.update = function(taskId){
         db.query(
             "UPDATE tasks" +
             " SET completed = true" +
-            " WHERE id = " + taskId, 
+            " WHERE id = " + taskId,
             (err, rows, fields) => {
                 if(err){
                     reject(err);

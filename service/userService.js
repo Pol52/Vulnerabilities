@@ -1,6 +1,8 @@
 var User = require('../models/user');
 
-var UserService = function(){};
+var UserService = function(){
+    //emtpy user service
+};
 
 UserService.findOne = function(username){
     return User.findOne(username);
@@ -13,7 +15,7 @@ UserService.createUser = function(req){
 }
 
 UserService.changePassword = function(userId, password){
-    return User.update(userId, password); 
+    return User.update(userId, password);
 }
 
 

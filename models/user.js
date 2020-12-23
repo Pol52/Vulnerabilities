@@ -1,7 +1,7 @@
 var db = require('../db/db');
 
 var User = function(){
-    //empty User Service
+    //empty User repository
 }
 
 User.findOne = function(username){
