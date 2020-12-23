@@ -1,7 +1,8 @@
 var db = require('../db/db');
 
-
-var User = function(){}
+var User = function(){
+    //empty User Service
+}
 
 User.findOne = function(username){
     return new Promise((resolve, reject) => {
@@ -23,13 +24,13 @@ User.create = function(username, email, password){
         var query = "INSERT INTO users" +
         " (username, email, password)" + 
         " VALUES ('" + username + "','" + email + "','" + password + "')";
-        db.query(query , 
-            (err, rows, fields) => {
+        db.query(query ,
+            (err, rows, _fields) => {
                 if(err){
                     reject(err);
                 }else{
-                    resolve(rows); 
-                } 
+                    resolve(rows);
+                }
             })
     })
 }
@@ -50,8 +51,5 @@ User.update = function(userId, password){
         )
     })
 }
-
-
-
 
 module.exports = User;

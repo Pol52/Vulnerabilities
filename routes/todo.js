@@ -4,7 +4,7 @@ var taskService = require('../service/taskService');
 var sessionChecker = require('../service/session');
 
 router.get('/', sessionChecker, function(req, res, next) {
-    taskService.findByUserToComplete(req.session.user)
+    taskService.findByUserToComplete(req.query.id)
     .then((tasks) => {
         res.json(tasks);
     })

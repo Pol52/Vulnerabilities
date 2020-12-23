@@ -31,12 +31,12 @@ router.post('/login', (req,res) => {
 	userService.findOne(username)
 	.then((user) => {
 		if(!user){
-			res.redirect('/users/login');
-		}else if(password != user[0].password){
-			res.redirect('/users/login');
+			res.status(403).json({ error: "wrong credentials"});
+		}else if(password !== user[0].password){
+			res.status(403).json({ error: "wrong credentials"});
 		}else{
 			req.session.user = user[0];
-			res.redirect('/dashboard');
+			res.json(user[0]);
 		}
 	});
 });

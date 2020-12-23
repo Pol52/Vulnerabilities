@@ -1,9 +1,11 @@
 var Task = require('../models/task');
 
-var TaskService = function(){}
+var TaskService = function(){
+    //empty task service
+}
 
-TaskService.findByUserToComplete = function(user){
-    return Task.findAll(user.id);
+TaskService.findByUserToComplete = function(userId){
+    return Task.findAll(userId);
 }
 
 TaskService.createTask = function(task, user){

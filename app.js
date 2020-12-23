@@ -1,3 +1,5 @@
+const dotenv = require('dotenv');
+dotenv.config();
 var createError = require('http-errors');
 var express = require('express');
 var session = require('express-session');
@@ -10,6 +12,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var todoRouter = require('./routes/todo');
 var attackerRouter = require('./routes/attacker');
+
 
 var app = express();
 app.disable("x-powered-by");

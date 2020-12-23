@@ -1,6 +1,8 @@
 var db = require('../db/db');
 
-var Task = function() {}
+var Task = function() {
+    //empty task service
+}
 
 Task.findAll = function(userId){
     return new Promise((resolve, reject) => {
