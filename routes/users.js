@@ -4,6 +4,7 @@ var appRoot = require('app-root-path');
 var userService = require('../service/userService');
 var path = require('path');
 const failedLoginFallbackURL = '/users/login';
+var sessionChecker = require('../service/session');
 
 router.get('/signup', (_req, res) => {
 	res.sendFile(appRoot + '/public/signup.html');
@@ -31,12 +32,12 @@ router.post('/login', (req,res) => {
 	userService.findOne(username)
 	.then((user) => {
 		if(!user){
-			res.redirect(failedLoginFallbackURL);
+			res.status(403).json({ error: "wrong credentials"});
 		}else if(!user.validPassword(password)){
-			res.redirect(failedLoginFallbackURL);
+			res.status(403).json({ error: "wrong credentials"});
 		}else{
 			req.session.user = user.dataValues;
-			res.redirect('/dashboard');
+			res.json(user.dataValues);
 		}
 	})
 	.catch(() => {

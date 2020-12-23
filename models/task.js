@@ -19,10 +19,13 @@ var Task = sequelize.define('tasks', {
         defaultValue: false
     },
     userId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER(11),
         references: {
             model: User,
             key: "id"
+        },
+        validate: {
+            isInt: true
         }
     }
 });

@@ -4,18 +4,18 @@ var TaskService = function(){
     //empty task service
 }
 
-TaskService.findByUser = function(user){
+TaskService.findByUser = function(userId){
     return Task.findAll({
         where: {
-            userId: user.id
+            userId: userId
          }
      })
 }
 
-TaskService.findByUserToComplete = function(user){
-    return Task.findAll({ 
-        where: { 
-            userId: user.id,
+TaskService.findByUserToComplete = function(userId){
+    return Task.findAll({
+        where: {
+            userId: userId,
             completed: false
          }
      })

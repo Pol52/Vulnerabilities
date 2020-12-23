@@ -5,7 +5,7 @@ var sessionChecker = require('../service/session');
 var createError = require('http-errors');
 
 router.get('/', sessionChecker, function(req, res, next) {
-    taskService.findByUserToComplete(req.session.user)
+    taskService.findByUserToComplete(req.session.user.id)
     .then((tasks) => {
         res.json(tasks);
     })
