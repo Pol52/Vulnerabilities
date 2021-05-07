@@ -1,3 +1,5 @@
+Project for Security and Knowledge Management exam
+
 HCI AppScan VScode plugin security issues detected
 
 ![HCI AppScan](https://github.com/Pol52/Vulnerabilities/blob/safe/reports/hciappscanplugin.png?raw=true)
